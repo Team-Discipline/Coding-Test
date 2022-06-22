@@ -7,11 +7,14 @@ Writing and Tidying up coding interview problems.
 
 ## Directory Rules
 [Offline Workshop Date]
+
 ㄴ> [problem title].[py, cpp, java, ts]
+
 ㄴ> How_to_solve.md => This is writings about how this team solved this problem.
 
 ## Branch Rules
 main -------------> main
+
 ㄴ>[your name] ↗
 
 ## IDE Rules.
