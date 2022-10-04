@@ -2,16 +2,7 @@
 
 Writing and Tidying up coding interview problems.
 
-# Rules
-
-1. Use python, C++, Java and Typescript. (whatever you want to do.)
-1. **Use English please.**
-
-## Directory Rules
-
-[Offline Workshop Date]
-
-ㄴ> [problem title].[py, cpp, java, ts]
+Write the problems to [issue](https://github.com/Team-Discipline/Coding-Test/issues)
 
 ## Reference Books
 
