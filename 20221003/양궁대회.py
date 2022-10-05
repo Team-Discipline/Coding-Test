@@ -18,7 +18,7 @@ def calc_point(apeach, lion):
 
 
 # 지금쏘는 과녁 idx, 남은 화살 개수, 어피치점수, 내점수
-def dfs(idx, n, apeach, lion):
+def dfs(idx: int, n: int, apeach: [int], lion: [int]):
     global answer, point
     if n < 0:
         return
@@ -35,6 +35,7 @@ def dfs(idx, n, apeach, lion):
 
     # 상대가 쏜 점수보다 높이 쏴본다
     lion[10 - idx] = apeach[10 - idx] + 1
+    # 다음 점수. 재귀 호출 (스택)을 이용한 dfs풀이. 남은 화살의 갯수에서 지금 라이언이 쏜 갯수만큼 적다.
     dfs(idx + 1, n - lion[10 - idx], apeach, lion)
     lion[10 - idx] = 0
     dfs(idx + 1, n, apeach, lion)
@@ -44,7 +45,7 @@ def solution(n, info):
     global answer, point
     answer = [-1]
     point = 0
-    dfs(0, n, info, [0 for _ in range(11)])
+    dfs(idx=0, n=n, apeach=info, lion=[0 for _ in range(11)])
     return answer
 
 
