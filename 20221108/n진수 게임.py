@@ -36,7 +36,7 @@ def solution(n: int, t: int, m: int, p: int):
 
         if order % m == abs(p - m):
             # 자신의 차례
-            results += left_to_speak.pop(0).
+            results += left_to_speak.pop(0)
         else:
             left_to_speak.pop(0)
 
