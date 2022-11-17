@@ -17,22 +17,21 @@ The solution must return closest value!!!
 """
 
 
-def bfs(tree: BST, target: int, result: [int]):
+def dfs(tree: BST, target: int, result: [int]):
     if tree is not None:
         a = abs(tree.value - target)
         if a < abs(result[0] - target):
             result[0] = tree.value
 
-        if tree.left is not None:
-            bfs(tree.left, target, result)
-
-        if tree.right is not None:
-            bfs(tree.right, target, result)
+        if tree.value > target and tree.left is not None:
+            dfs(tree.left, target, result)
+        elif tree.value <= target and tree.right is not None:
+            dfs(tree.right, target, result)
 
 
 def findClosestValueInBst(tree: BST, target: int):
     result = [float('INF')]
-    bfs(tree, target, result)
+    dfs(tree, target, result)
     return result[0]
 
 
