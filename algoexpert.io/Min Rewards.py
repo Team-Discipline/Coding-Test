@@ -20,6 +20,6 @@ def minRewards(scores):
 
 
 assert minRewards([2, 1, 4, 3, 6, 5, 8, 7, 10, 9]) == 15
-assert minRewards([5, 10]) == sum([1, 2])
+assert minRewards([5, 10]) == 3
 assert minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5]) == sum([4, 3, 2, 1, 2, 3, 4, 5, 1])  # [4, 3, 2, 1, 2, 3, 4, 5, 1]
 assert minRewards([0, 4, 2, 1, 3]) == 9
