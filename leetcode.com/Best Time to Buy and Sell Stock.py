@@ -5,31 +5,18 @@ Best Time to Buy and Sell Stock
 
 
 class Solution:
-
     def maxProfit(self, prices: [int]) -> int:
-        result = 0
+        max_profit = 0
+        buy, sell = 0, 1
 
-        # Judge if it is descending.
-        is_descending = True
-        for i in range(len(prices) - 1):
-            if prices[i] < prices[i + 1]:
-                is_descending = False
+        while sell < len(prices):
+            if prices[buy] > prices[sell]:
+                buy = sell
+            else:
+                max_profit = max(max_profit, prices[sell] - prices[buy])
+            sell += 1
 
-        if is_descending:
-            return 0
-        else:
-            while prices:
-                m = min(prices)
-                minimum_index = prices.index(m)
-                rearrange = prices[minimum_index + 1:]
-
-                for price in rearrange:
-                    if price - m > result:
-                        result = price - m
-
-                prices.pop(minimum_index)
-
-            return result
+        return max_profit
 
 
 s = Solution()
