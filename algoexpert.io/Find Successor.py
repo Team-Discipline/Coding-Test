@@ -25,11 +25,11 @@ def findSuccessor(tree, node):
                 return curr
 
     child = node
-    parent = node.parent
+    parent = node.parents
     while True:
         if parent is None or child is parent.left: return parent
         child = parent
-        parent = parent.parent
+        parent = parent.parents
 
 
 root = BinaryTree(1)
