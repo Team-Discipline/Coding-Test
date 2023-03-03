@@ -11,34 +11,15 @@ class Solution:
         Position will be a y value of equation.
         From 0 to target, That is range of graph.
         """
-        array = list(zip(speed, position))
-        array.sort(key=lambda x: x[1], reverse=True)
+        array = list(zip(position, speed))
+        array.sort(key=lambda x: x[0], reverse=True)
 
-        # [(10, 2), (8, 4), (5, 1), (3, 3), (0, 1)]
         stack = []
-        for s, p in array:
-            if stack:
-                while stack:
-                    meet = False
-                    ts, tp = stack[-1]
-                    if ts < s:
-                        hour = 0
-                        while hour < target:
-                            first = s * hour + p
-                            second = ts * hour + tp
-                            if first > target or second > target:
-                                break
-                            elif first == second:
-                                meet = True
-                                break  # break the while loop.
-                            hour += 1
-                        else:
-                            stack.pop()
-                    if not meet:
-                        stack.append((s, p))
-                    break
-            else:
-                stack.append((s, p))
+        for p, s in array:
+            stack.append((target - p) / s)
+
+            if len(stack) > 1 and stack[-1] <= stack[-2]:
+                stack.pop()
 
         return len(stack)
 
