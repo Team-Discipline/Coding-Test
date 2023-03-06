@@ -17,32 +17,21 @@ class LinkedList:
         return f'{self.value} ({self.next})'
 
 
-def len_(node):
-    curr = node
-    count = 0
-    while curr:
-        curr = curr.next
-        count += 1
-    return count
-
-
 def removeKthNodeFromEnd(head, k):
-    """
-    What if k is 4?
-    What number of index we should remove from head?
-    Total length of head is 10.
-    So at the index of 5 (6th element), remove child node and
-    should connect with it's grandchild node.
-    """
-    target_index = len_(head) - k  # => 6
-    curr = head
-    stack = []
-    for i in range(len_(head) - 1):
-        if target_index <= i:
-            curr.value = curr.next.value
-        stack.append(curr)
-        curr = curr.next
-    stack[-1].next = None
+    counter = 1
+    first = head
+    second = head
+    while counter <= k:
+        second = second.next
+        counter += 1
+    if second is None:
+        head.value = head.next.value
+        head.next = head.next.next
+        return
+    while second.next:
+        second = second.next
+        first = first.next
+    first.next = first.next.next
 
 
 # ===========
@@ -77,7 +66,7 @@ class LinkedList(LinkedList):
 class TestProgram(unittest.TestCase):
     def test_case_1(self):
         test = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        expected = LinkedList(1).addMany([2, 3, 4, 5, 7, 8, 9])
+        expected = LinkedList(1).addMany([2, 3, 4, 5, 6, 7, 8, 9])
         removeKthNodeFromEnd(test, 10)
         self.assertEqual(expected.getNodesInArray(), test.getNodesInArray())
 
