@@ -5,33 +5,13 @@ Min Number Of Coins For Change
 
 
 def minNumberOfCoinsForChange(n, denoms):
-    if n == 0: return 0
-    denoms = list(filter(lambda x: x <= n, denoms))  # Cut off numbers when bigger than n.
-    denoms.sort(reverse=True)
-    num = 1
-    while True:
-        target = n
-        if denoms[0] * num < target:
-            num += 1
-            continue
-        elif denoms[-1] * num > target:
-            # No hope.
-            break
-
-        results = []
-
-        def recur(array):
-            if len(array) != num:
-                for number in denoms:
-                    results.append(recur(array + [number]))
-            return sum(array) == target
-
-        recur([])
-        if any(results):
-            return num
-        else:
-            num += 1
-    return -1
+    dp = [float('inf') for _ in range(n + 1)]
+    dp[0] = 0
+    for denom in denoms:
+        for amount in range(len(dp)):
+            if denom <= amount:
+                dp[amount] = min(dp[amount], dp[amount - denom] + 1)
+    return dp[n] if dp[n] != float('inf') else -1
 
 
 assert minNumberOfCoinsForChange(7, [3, 7]) == 1
