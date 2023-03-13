@@ -11,25 +11,38 @@ class ListNode:
         self.val = val
         self.next = next
 
+    def __str__(self):
+        return f'{self.val} ({self.next})'
+
+    def __repr__(self):
+        return f'{self.val} ({self.next})'
+
 
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        results = []
+        dummy = ListNode()
 
-        for node in lists:
-            curr = node
-            while curr:
-                results.append(curr.val)
-                curr = curr.next
-        results.sort()
+        curr = dummy
 
-        if results:
-            root = ListNode(results.pop(0))
-            curr = root
-            for val in results:
-                curr.next = ListNode(val)
-                curr = curr.next
+        while None in lists:
+            lists.remove(None)
 
-            return root
-        else:
-            return None
+        while lists:
+            min_node = ListNode(float('inf'))
+            for node in lists:
+                if min_node.val > node.val:
+                    min_node = node
+            curr.next = min_node
+            curr = curr.next
+            lists[lists.index(min_node)] = lists[lists.index(min_node)].next
+            while None in lists:
+                lists.remove(None)
+
+        return dummy.next
+
+
+# [[1,4,5],[1,3,4],[2,6]]
+s = Solution()
+assert s.mergeKLists([ListNode(1, ListNode(4, ListNode(5))),
+                      ListNode(1, ListNode(3, ListNode(4))),
+                      ListNode(2, ListNode(6))])
