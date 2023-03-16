@@ -2,32 +2,31 @@
 https://leetcode.com/problems/subsets/
 Zigzag Conversion
 """
+from typing import List
 
 
 class Solution:
-    def dfs(self, nums: [int], given: [int], results):
-        if len(given) >= len(nums):
-            return
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
 
-        for num in nums:
-            if num in given:
-                continue
+        subset = []
 
-            new = given.copy()
-            new.append(num)
-            new.sort()
-            if new not in results:
-                results.append(new)
-                self.dfs(nums, new, results)
+        def dfs(i):
+            if i >= len(nums):
+                res.append(subset.copy())
+                return
+            # decision to include nums[i]
+            subset.append(nums[i])
+            dfs(i + 1)
+            # decision NOT to include nums[i]
+            subset.pop()
+            dfs(i + 1)
 
-    def subsets(self, nums: [int]) -> [[int]]:
-        nums.sort()
-        results = [[], nums]
-
-        self.dfs(nums, [], results)
-
-        return results
+        dfs(0)
+        return res
 
 
 s = Solution()
-s.subsets([1, 2, 3])
+actual = s.subsets([1, 2, 3])
+expected = [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+assert actual == expected
