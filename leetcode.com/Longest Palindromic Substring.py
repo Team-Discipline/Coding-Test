@@ -6,24 +6,27 @@ Longest Palindromic Substring
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        result = ''
+        maxval = ''
         for i in range(len(s)):
-            # odd
-            l, r = i, i
-            while l > -1 and r < len(s) and s[l] == s[r]:
-                if (r - l + 1) > len(result):
-                    result = s[l:r + 1]
-                l -= 1
-                r += 1
+            if len(maxval) > i * 2:
+                continue
 
-            # even
-            l, r = i, i + 1
-            while l > -1 and r < len(s) and s[l] == s[r]:
-                if (r - l + 1) > len(result):
-                    result = s[l:r + 1]
-                l -= 1
-                r += 1
-        return result
+            # odd case
+            append = len(maxval) // 2
+            while -1 < i - append and i + append < len(s):
+                block = s[i - append: i] + s[i] + s[i + 1: i + append + 1]
+                if block == block[::-1]:
+                    maxval = block
+                append += 1
+
+            # even case
+            append = len(maxval) // 2
+            while -1 < i - append and i + append + 1 < len(s):
+                block = s[i - append: i + 2] + s[i + 2: i + append + 2]
+                if block == block[::-1]:
+                    maxval = block
+                append += 1
+        return maxval
 
 
 s = Solution()

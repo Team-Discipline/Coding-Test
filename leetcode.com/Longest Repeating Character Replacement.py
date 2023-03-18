@@ -3,26 +3,21 @@ https://leetcode.com/problems/longest-repeating-character-replacement/descriptio
 Longest Repeating Character Replacement
 """
 
-from collections import defaultdict
-
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        d = defaultdict(int)
-        maxlen = 0
-
+        d = {}
         left = 0
-        maxf = 0
+        maxval = 0
         for right in range(len(s)):
-            d[s[right]] += 1
-            maxf = max(maxf, d[s[right]])
-
-            if (right - left + 1) - maxf > k:
+            d[s[right]] = 1 + d.get(s[right], 0)
+            many_key = sorted(d, key=d.get, reverse=True)[0]
+            if (right - left + 1) - d[many_key] > k:
                 d[s[left]] -= 1
                 left += 1
-
-            maxlen = max(maxlen, right - left + 1)
-        return maxlen
+            else:
+                maxval = max(maxval, (right - left + 1))
+        return maxval
 
 
 s = Solution()
