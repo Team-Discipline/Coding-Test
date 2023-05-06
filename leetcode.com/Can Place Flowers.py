@@ -2,23 +2,23 @@
 https://leetcode.com/problems/can-place-flowers/
 Can Place Flowers
 """
+from typing import List
 
 
 class Solution:
-    def canPlaceFlowers(self, flowerbed: [int], n: int) -> bool:
-        # Another solution with O(1) space complexity
-        for i in range(len(flowerbed)):
-            if n == 0:
-                return True
-            if ((i == 0 or flowerbed[i - 1] == 0)  # If at the first element or the previous element equals to 0
-                    and (flowerbed[i] == 0)  # If current element equals to 0
-                    and (i == len(flowerbed) - 1 or flowerbed[
-                        i + 1] == 0)):  # If at the last element or the next element equals to 0
-                # Place flower at the current position
-                flowerbed[i] = 1
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        f = [0] + flowerbed + [0]
+        for i in range(1, len(f) - 1):
+            if f[i - 1] == 0 and f[i] == 0 and f[i + 1] == 0:
+                # we can insert to ith element
+                # because this problem is just to return true or false of possibility.
+                # not minimum or maximum number. So we can insert that.
+                f[i] = 1
                 n -= 1
-
-        return n == 0
+        if n > 0:
+            return False
+        else:
+            return True
 
 
 s = Solution()
