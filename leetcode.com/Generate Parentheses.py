@@ -2,30 +2,36 @@
 https://leetcode.com/problems/generate-parentheses/
 Generate Parentheses
 """
+from functools import lru_cache
+from typing import List
 
 
 class Solution:
-    def make(self, n: int, stack: str, results: [str]):
-        height_limit = n * 2
-        if 0 < len(stack) < height_limit:
-            # Stack is not full yet!
-            # We can insert "()" in every single index!
-            for index in range(len(stack)):
-                self.make(n, stack[:index + 1] + '()' + stack[index + 1:], results)
-        elif len(stack) == 0 and n > 0:
-            self.make(n, '()', results)
-        elif len(stack) == height_limit and n > 0:
-            results.append(stack)
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
 
-    def generateParenthesis(self, n: int) -> [str]:
-        results = []
+        @lru_cache(maxsize=None)
+        def find_char_indices(ch: str, s: str) -> List[int]:
+            res = []
+            for i, c in enumerate(s):
+                if ch == c:
+                    res.append(i)
+            return res
 
-        self.make(n, '', results)
+        @lru_cache(maxsize=None)
+        def make(given: str, count: int):
+            nonlocal n, res
+            if count == n:
+                res.append(given)
+                return
+            for i in find_char_indices(')', given):
+                make(given[:i] + '()' + given[i:], count + 1)
+                make(given[:i + 1] + '()' + given[i + 1:], count + 1)
 
-        results = list(set(results))
-        return results
+        make('()', 1)
+        return sorted(list(set(res)))
 
 
 s = Solution()
-assert s.generateParenthesis(3) == ["((()))", "(()())", "(())()", "()(())", "()()()"]
-assert s.generateParenthesis(1) == ["()"]
+assert s.generateParenthesis(3) == sorted(["((()))", "(()())", "(())()", "()(())", "()()()"])
+assert s.generateParenthesis(1) == sorted(["()"])
